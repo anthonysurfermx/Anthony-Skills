@@ -6,7 +6,6 @@ Reusable AI agent skills, multi-LLM workflows, and brief templates by Anthony Ch
 
 ```
 skills/              # Autonomous agent skill definitions
-├── agent-radar/     # Smart Money trading agent (Polymarket + OKX signals)
 └── bobby-trader/    # AI Trading CIO with 3-agent debate system
 
 templates/           # Brief templates for multi-LLM delegation
@@ -20,9 +19,6 @@ workflows/           # Reusable AI workflows
 ```
 
 ## Skills
-
-### Agent Radar
-Autonomous crypto trading agent that runs every 8 hours. Crosses Polymarket smart money consensus with OKX on-chain whale signals, reasons with Claude, and executes trades with hard risk limits.
 
 ### Bobby Agent Trader
 AI Trading CIO with a 3-agent internal debate system (Alpha Hunter, Red Team, CIO). 10 real-time data sources, technical analysis, conviction scoring, and on-chain execution on OKX X Layer.
