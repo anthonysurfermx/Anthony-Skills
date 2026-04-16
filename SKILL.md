@@ -1,3 +1,10 @@
+---
+name: anthony-daily-ai
+description: Multi-LLM workflow (Claude as Head of Product), Opus 4.7 best practices, and delegation templates for Codex, Gemini, and Stitch.
+version: 1.0.0
+author: Anthony Chávez
+---
+
 # Anthony's Daily AI Skill
 
 Skill operativo para el día a día de Anthony Chávez. Combina: workflow multi-LLM (Claude como Head of Product), best practices de Opus 4.7, y templates de delegación a otros modelos.
