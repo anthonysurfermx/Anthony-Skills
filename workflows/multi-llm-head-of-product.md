@@ -88,13 +88,48 @@ When the user pastes responses back into `.ai/responses/`, read them and:
 2. If there are pending briefs to send, remind the user
 3. Summarize what was done and what's next
 
-## SubAgent Rules
+## SubAgent Rules (Updated for Opus 4.7)
 
-When launching SubAgents for parallel work:
-- Only parallelize **independent** tasks (no shared state between agents)
+Opus 4.7 is more selective about spawning subagents. Follow these rules:
+
+### When NOT to spawn a SubAgent
+- Work you can complete directly in a single response (e.g., refactoring a function you can already see)
+- Simple lookups, single-file edits, or tightly scoped changes
+- The model's adaptive thinking handles these better inline
+
+### When to spawn SubAgents
+- **Fan-out across independent items** — reading multiple files, analyzing multiple services
+- **Parallel independent tasks** — no shared state between agents
+- **Always send all subagents in the same turn** for maximum parallelism
+
+### SubAgent prompt requirements
 - Each SubAgent gets a complete, self-contained prompt
 - Include: goal, relevant files, existing patterns to follow, output location
 - After all complete: build, verify integration
+
+## Opus 4.7 Session Optimization
+
+### First-turn completeness
+Provide complete task descriptions in the first turn:
+- **Intent** — What you want to achieve
+- **Constraints** — Technical limits, existing patterns
+- **Acceptance criteria** — What "done" looks like
+- **File locations** — Relevant paths
+
+> Each user turn adds reasoning overhead. Batch questions together and provide enough context for model independence.
+
+### Effort levels
+Default effort is `xhigh` — keep it there for most coding and agentic work. Only switch to `high` for cost-sensitive concurrent sessions, or `max` for genuinely hard problems.
+
+### Adaptive thinking
+Extended Thinking with a fixed budget no longer exists. The model decides when to think:
+- For complex problems: "Think step-by-step, this is harder than it looks"
+- For quick responses: "Prioritize responding quickly rather than thinking deeply"
+
+### Tool use
+Opus 4.7 calls tools less frequently and reasons more. If you need aggressive search or file reading, say so explicitly in your prompt.
+
+See [guides/opus-4.7-best-practices.md](../guides/opus-4.7-best-practices.md) for the full reference.
 
 ## Adding to Your Project
 
