@@ -1,49 +1,103 @@
 # Anthony Skills
 
-Multi-LLM workflows, brief templates, and best practices for day-to-day AI-assisted work by Anthony Chavez.
+Multi-LLM workflows, skills, subagents y templates para día a día de trabajo AI-asistido.
 
 ## Structure
 
 ```
-templates/           # Brief templates for multi-LLM delegation
-├── codex-brief.md   # Backend architecture / devil's advocate (Codex/o1/o3)
-├── gemini-brief.md  # UX design / user advocate (Gemini)
-├── stitch-brief.md  # Design system screen generation (Stitch MCP)
-└── synthesis.md     # Combine responses from multiple models
+skills/                                 # Skills activables por Claude Code
+├── security-and-hardening/SKILL.md     # ← addyosmani/agent-skills (MIT)
+└── spec-driven-development/SKILL.md    # ← addyosmani/agent-skills (MIT)
 
-guides/              # Model-specific best practices and operational references
-└── opus-4.7-best-practices.md  # Effort levels, adaptive thinking, session optimization
+agents/                                 # Subagents invocables con Task tool
+├── ceo.md                              # Perspectiva estratégica
+├── engmgr.md                           # Plan de ejecución
+├── qa.md                               # Edge cases / red team
+└── designer.md                         # UX / microcopy
 
-workflows/           # Reusable AI workflows
-└── multi-llm-head-of-product.md  # Claude as Head of Product in a multi-LLM team
+templates/                              # Briefs para delegación multi-LLM
+├── codex-brief.md                      # Backend / devil's advocate
+├── gemini-brief.md                     # UX / user advocate
+├── stitch-brief.md                     # Design system generation
+└── synthesis.md                        # Combinar respuestas
+
+guides/
+└── opus-4.7-best-practices.md          # Effort levels + adaptive thinking
+
+workflows/
+└── multi-llm-head-of-product.md        # Claude como Head of Product
+
+SKILL.md                                # Skill principal: anthony-daily-ai
 ```
 
-## Multi-LLM Workflow
+## Installation
 
-The core idea: instead of using one AI model for everything, delegate specialized tasks to the right model and synthesize their responses.
+### Como skills y agents en Claude Code
+
+Copia los directorios a la ubicación correspondiente:
+
+```bash
+# Skills globales
+cp -r skills/* ~/.claude/skills/
+
+# Agents globales (Task tool los encuentra por frontmatter `name:`)
+cp -r agents/* ~/.claude/agents/
+```
+
+O clona y symlinkea:
+
+```bash
+git clone https://github.com/anthonysurfermx/Anthony-Skills ~/anthony-skills
+ln -s ~/anthony-skills/skills/* ~/.claude/skills/
+ln -s ~/anthony-skills/agents/* ~/.claude/agents/
+```
+
+### Como templates en un proyecto
+
+```bash
+cp -r templates/ .ai/templates/
+```
+
+## Skills incluidas
+
+| Skill | Origen | Uso |
+|---|---|---|
+| `security-and-hardening` | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Review de secrets, API keys, DB passwords, trust boundaries antes de merge |
+| `spec-driven-development` | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Escribir spec antes de código cuando la tarea no es trivial |
+| `anthony-daily-ai` (SKILL.md raíz) | Propio | Multi-LLM orchestration + Opus 4.7 tuning |
+
+## Agents / Subagents
+
+Invocables con el Task tool de Claude Code. Cada uno carga un system prompt especializado:
+
+- **`ceo`** (🎩) — trade-offs estratégicos, quarterly horizon, opportunity cost.
+- **`engmgr`** (🛠️) — plan numerado, tiempos, blockers, rollback.
+- **`qa`** (🔴) — cómo se va a romper, edge cases, silent failures.
+- **`designer`** (🎨) — copy exacto, tono Chief of Staff, mobile-first.
+
+Los mismos personas están en [anthony30x/skills/personas](https://github.com/anthonysurfermx/anthony30x/tree/main/skills/personas) y se invocan por Telegram con `claude haz @ceo ...`.
+
+## Multi-LLM Workflow (resumen)
+
+Core idea: en vez de usar un solo modelo, delegar a especialistas y sintetizar.
 
 - **Claude Code** = Head of Product (analyze, decide, delegate, synthesize)
 - **Codex/o1** = Backend Architect / Devil's Advocate
 - **Gemini** = UX Designer / User Advocate
 - **Stitch** = Design System Generator
 
-See [workflows/multi-llm-head-of-product.md](workflows/multi-llm-head-of-product.md) for the full framework.
+Ver [workflows/multi-llm-head-of-product.md](workflows/multi-llm-head-of-product.md).
 
 ## Guides
 
 ### Opus 4.7 Best Practices
-Referencia operativa para Claude Opus 4.7 con Claude Code: effort levels (`xhigh` default), adaptive thinking, subagent rules, session optimization, y tabla de migración desde Opus 4.6.
+Referencia operativa: effort levels (`xhigh` default), adaptive thinking, subagent rules, session optimization, migración desde Opus 4.6. [guides/opus-4.7-best-practices.md](guides/opus-4.7-best-practices.md).
 
-See [guides/opus-4.7-best-practices.md](guides/opus-4.7-best-practices.md).
+## Attribution
 
-## Usage
-
-### Use the multi-LLM workflow
-1. Copy `templates/` into your project's `.ai/templates/`
-2. Add the workflow instructions to your `CLAUDE.md`
-3. Create `.ai/briefs/`, `.ai/responses/`, `.ai/decisions/` directories
-
-See the workflow doc for details.
+Ver [ATTRIBUTION.md](ATTRIBUTION.md) y [LICENSE.addyosmani](LICENSE.addyosmani) para las skills derivadas de `addyosmani/agent-skills`.
 
 ## License
-MIT
+
+Trabajo propio: MIT.
+Partes derivadas de `addyosmani/agent-skills`: MIT, copyright (c) 2025 Addy Osmani.
